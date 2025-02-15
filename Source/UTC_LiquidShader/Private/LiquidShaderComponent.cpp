@@ -669,7 +669,10 @@ void ULiquidShaderComponent::EnqueueCS()
 	auto IntersectionCS = new (FUTC_LiquidShaderCSManager);
 	
 	IntersectionCS->PerformIntersection(VertexBuffer, IndexBuffer, WorldLiquidOffset, BoundRange, BBOriginPosition, WorldPosition, SectionRange, WorldTransform, CapRTInstance);
-	IntersectionCS->PerformFill(CapRTInstance);
+	/* IntersectionCS->PerformFill causes a GPU crash on 5.5
+	   This works on fine on 5.3 and 5.4, but crashes on 5.5
+	   The liquid movement, bubbles etc still appears to function correctly without
+	IntersectionCS->PerformFill(CapRTInstance);*/
 	
 	if(CleanUpCap)
 	{
